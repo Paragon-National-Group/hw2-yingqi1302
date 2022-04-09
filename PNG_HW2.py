@@ -19,17 +19,65 @@
 #     iterative_palindrome(12) -> false
 #     iterative_palindrome(2468642) -> true
 def iterative_palindrome(n):
-    #TODO
-    return
+    n_list = [int(digit) for digit in str(n)]
+    new_n = []
+    is_palindrome = False
+
+    for digit in n_list:
+        new_n.insert(0, digit)
+
+    iteration = 0
+
+    for i in n_list:
+        if i == new_n[iteration]:
+            is_palindrome = True
+            iteration += 1
+        else:
+            is_palindrome = False
+            break
+
+    return is_palindrome
+
+print(iterative_palindrome(2002))
+print(iterative_palindrome(1234))
 
 # This function is the same as iterative_palindrome() except instead of using a
 # loop, implement the function in a recursive way.
 # Ex) recursive_palindrome(1) -> true
 #     recursive_palindrome(12) -> false
 #     recursive_palindrome(2468642) -> true
-def recurisve_palindrome(n):
-    #TODO
-    return
+def recursive_palindrome(n):
+
+    n_list = [int(digit) for digit in str(n)]
+    new_n = []
+
+    for digit in n_list:
+        new_n.insert(0, digit)
+
+    no_of_iterations = len(n_list)
+
+    is_palindrome = True
+
+    def helper(iteration):
+
+        global is_palindrome
+
+        if iteration == no_of_iterations:
+            is_palindrome = True
+        else:
+            if n_list[iteration] == new_n[iteration]:
+                iteration += 1
+                is_palindrome = True
+                helper(iteration)
+            else:
+                is_palindrome = False
+
+        return is_palindrome
+
+    return helper(0)
+
+print(recursive_palindrome(2002))
+print(recursive_palindrome(1234))
 
 # Helper function for sum_factorials(). Takes a number as an argument and returns
 # the factorial of that number.
@@ -37,8 +85,20 @@ def recurisve_palindrome(n):
 #     factorial(4) -> 24
 #     factorial(7) -> 5040
 def factorial(n):
-    #TODO
-    return
+
+    i = 1
+
+    factorial = 1
+
+    while i <= n:
+        factorial *= i
+        i += 1
+
+    return factorial
+
+print(factorial(1))
+print(factorial(4))
+print(factorial(7))
 
 # Helper function for sum_factorials(). Takes a number as an argument and returns
 # a boolean value of true or false that shows whether the inputted number is a 
@@ -47,14 +107,30 @@ def factorial(n):
 #     is_prime(12) -> false
 #     is_prime(23) -> true
 def is_prime(n):
-    #TODO
-    return
+
+    i = 2
+    no_divisors = 0
+
+    while i < n:
+        if n % i == 0:
+            no_divisors += 1
+            i += 1
+        else:
+            no_divisors += 0
+            i += 1
+
+    return no_divisors == 0
+
+print(is_prime(2))
+print(is_prime(7))
+print(is_prime(12))
+print(is_prime(23))
 
 # Function that creates a node to help testing of sum_factorials()
 class Node:
     def __init__(self, content): 
         self.content = content
-        self.content = next
+        self.next = None
 
 # Function to insert a node to the beginning of a linked list
 def push(head_ptr, new_content):
@@ -75,5 +151,21 @@ def push(head_ptr, new_content):
 #     lst = push(lst, 6)
 #     sum_factorials(lst) -> 128
 def sum_factorials(head_ptr):
-    #TODO
-    return
+    cur = head_ptr
+    res = 0
+
+    while cur is not None:
+        if is_prime(cur.content):
+            res += factorial(cur.content)
+        cur = cur.next
+
+    return res
+
+lst = None
+lst = push(lst, 2)
+lst = push(lst, 14)
+lst = push(lst, 5)
+lst = push(lst, 3)
+lst = push(lst, 6)
+
+print(sum_factorials(lst))
